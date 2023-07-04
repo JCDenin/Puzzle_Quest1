@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF"
-    tools:context=".MainActivity2">
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -18,11 +18,12 @@
         android:layout_marginBottom="8dp"
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
+        android:src="@drawable/photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/photo" />
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
