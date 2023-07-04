@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.teamspirt.puzzlequest.ui.theme.PuzzleQuestTheme
 
-/*class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -27,17 +27,8 @@ import com.teamspirt.puzzlequest.ui.theme.PuzzleQuestTheme
             }
         }
     }
-}*/
-class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val imageView: ImageView = findViewById(R.id.imageView3)
-        imageView.setImageResource(R.drawable.photo) // Replace "your_image" with the actual image resource name
-    }
 }
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
