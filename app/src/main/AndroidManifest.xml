@@ -13,10 +13,13 @@
         android:theme="@style/Theme.PuzzleQuest"
         tools:targetApi="31">
         <activity
+            android:name=".PuzzleActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PuzzleQuest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
