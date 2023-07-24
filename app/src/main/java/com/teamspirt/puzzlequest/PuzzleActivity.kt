@@ -139,7 +139,7 @@ class PuzzleActivity : AppCompatActivity() {
                 Math.abs(scaledBitmapTop),croppedImageWidth,croppedImageHeight)
         )
 
-        // Calculate the width and height of the pieces (продовжуйте тут далі)
+        // Calculate the width and height of the pieces (продовжуйте тут далі)sadsadsadsadas
 
 
     }
