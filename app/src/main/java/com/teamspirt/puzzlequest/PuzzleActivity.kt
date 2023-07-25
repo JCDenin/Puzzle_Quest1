@@ -341,17 +341,17 @@ class PuzzleActivity : AppCompatActivity() {
 
         imageView.imageMatrix.getValues(f)
 
-        //Extract the scale value  using the  sonstants (if aspect ratio maintained scaleX == scaley)
+        //Extract the scale value  using the  constants (if aspect ratio maintained scaleX == scaleY)
 
         val scaleX = f[Matrix.MSCALE_X]
-        val scaley = f[Matrix.MSCALE_Y]
+        val scaleY = f[Matrix.MSCALE_Y]
 
         //Get the drawable (could also set the bitmap the drawable and getWidth / get Height)
 
         val d = imageView.drawable
 
         val origW = d.intrinsicWidth
-        val origh = d.intrinsicHeight
+        val origH = d.intrinsicHeight
 
         // далі продовжувати тут..
         return ret
