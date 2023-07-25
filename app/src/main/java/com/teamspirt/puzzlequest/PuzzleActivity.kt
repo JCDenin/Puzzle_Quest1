@@ -183,7 +183,7 @@ class PuzzleActivity : AppCompatActivity() {
                 piece.pieceWidth = pieceWidth + offsetX
                 piece.pieceHeight = pieceHeight + offsetY
 
-                // this bitmap will hild our final puzzle piece image
+                // this bitmap will hold our final puzzle piece image
                 val puzzlePiece = Bitmap.createBitmap(
                     pieceWidth + offsetX, pieceHeight + offsetY,
                     Bitmap.Config.ARGB_8888
