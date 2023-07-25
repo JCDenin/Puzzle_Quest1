@@ -13,11 +13,13 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PaintingStyle
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.text.rememberTextMeasurer
 import java.io.IOException
@@ -147,7 +149,7 @@ class PuzzleActivity : AppCompatActivity() {
             scaledBitmap,
                 Math.abs(scaledBitmapLeft),
                 Math.abs(scaledBitmapTop),croppedImageWidth,croppedImageHeight)
-        )
+
 
         // Calculate the width and height of the pieces (продовжуйте тут далі)sadsadsadsadas
         val pieceWidth = croppedImageWidth/cols
@@ -178,8 +180,9 @@ class PuzzleActivity : AppCompatActivity() {
                 piece.xCoord = xCoord - offsetX + imageView.left
                 piece.xCoord = xCoord - offsetX + imageView.top
 
-                piece.pieceWidth = pieceWidth = offsetX
-                piece.pieceHeight = pieceHeight = offsetY
+                piece.pieceWidth = pieceWidth + offsetX
+                piece.pieceHeight = pieceHeight + offsetY
+
                 // this bitmap will hild our final puzzle piece image
                 val puzzlePiece = Bitmap.createBitmap(
                     pieceWidth + offsetX, pieceHeight + offsetY,
@@ -189,7 +192,7 @@ class PuzzleActivity : AppCompatActivity() {
                 //draw path
                 val bampSize = pieceHeight / 4
                 val canvas = Canvas(puzzlePiece)
-                val path = Path()
+                val path = android.graphics.Path
                 path.moveTo(offsetX.toFloat(),offsetY.toFloat())
 
                 if(row == 0){
@@ -202,14 +205,14 @@ class PuzzleActivity : AppCompatActivity() {
                 else{
                     //top bump
                     path.lineTo(
-                        (offsetX + (pieceBitmap.width - offsetX)/3.toFloat(),
-                        offsetY.toFloat()
+                        (offsetX + (pieceBitmap.width - offsetX)/3).toFloat()
                     )
+
                     path.cubicTo(
                         (offsetX + (pieceBitmap.width - offsetX).toFloat()),
-                        (offsetY - bumpSize).toFloat(),
-                        (offsetX + (pieceBitmap.width - offsetX) / 6 *5).toFloat())
-                        (offsetY - bumpSize).toFloat(),
+                        (offsetY - bampSize).toFloat(),
+                        (offsetX + (pieceBitmap.width - offsetX) / 6 *5).toFloat(),
+                        (offsetY - bampSize).toFloat(),
                         (offsetX + (pieceBitmap.width - offsetX)/ 3 * 2).toFloat(),
                         offsetY.toFloat()
                     )
@@ -227,6 +230,20 @@ class PuzzleActivity : AppCompatActivity() {
                 else {
                     // right bump
                     path.lineTo(
+                        pieceBitmap.width.toFloat(),
+                        (offsetY + (pieceBitmap.height - offsetY) / 3).toFloat()
+                    )
+                    path.cubicTo(
+                        (pieceBitmap.width - bampSize).toFloat(),
+                        (offsetY + (pieceBitmap.height - offsetY) / 6).toFloat(),
+                        (pieceBitmap.width - bampSize).toFloat(),
+                        (offsetY + (pieceBitmap.height - offsetY) / 6 * 5).toFloat(),
+                        (pieceBitmap.width - bampSize).toFloat(),
+                        (offsetY + (pieceBitmap.height - offsetY) / 3 * 2).toFloat(),
+                    )
+
+                    path.lineTo(
+                        pieceBitmap.width.toFloat(),
                         pieceBitmap.height.toFloat()
                     )
                 }
@@ -245,11 +262,11 @@ class PuzzleActivity : AppCompatActivity() {
 
                     path.cublicTo(
                         (offsetX + (pieceBitmap.width - offsetX)/ 6 * 5).toFloat(),
-                        (pieceBitmap.height - bumpSize).toFloat(),
+                        (pieceBitmap.height - bampSize).toFloat(),
                         (offsetX + (pieceBitmap.width - offsetX)/ 6).toFloat(),
-                        (pieceBitmap.height - bumpSize).toFloat(),
+                        (pieceBitmap.height - bampSize).toFloat(),
                         (offsetX + (pieceBitmap.width - offsetX)/ 3).toFloat(),
-                        (pieceBitmap.height - bumpSize).toFloat()
+                        (pieceBitmap.height - bampSize).toFloat()
                     )
 
                     path.lineTo(
@@ -269,11 +286,11 @@ class PuzzleActivity : AppCompatActivity() {
                         (offsetY + ( pieceBitmap.height - offsetY)/ 3 * 2).toFloat(),
                     )
                     path.cubicTo(
-                        (offsetX - bumpSize).toFloat(),
+                        (offsetX - bampSize).toFloat(),
                         (offsetY + ( pieceBitmap.height)/6 * 5).toFloat(),
-                        (offsetX - bumpSize).toFloat(),
+                        (offsetX - bampSize).toFloat(),
                         (offsetY + ( pieceBitmap.height)/6 ).toFloat(),
-                        (offsetX - bumpSize).toFloat(),
+                        (offsetX - bampSize).toFloat(),
                         (offsetY + ( pieceBitmap.height)/3).toFloat()
                 )
                     path.close()
@@ -340,16 +357,20 @@ class PuzzleActivity : AppCompatActivity() {
         return ret
 
     }
-    companion object{
-            fun rotateImage(source:Bitmap,angle:Float):Bitmap{
+    companion object {
+        fun rotateImage(source: Bitmap, angle: Float): Bitmap {
 
-                val matrix = Matrix()
-                matrix.postRotate(angle)
+            val matrix = Matrix()
+            matrix.postRotate(angle)
 
-                return Bitmap.createBitmap(
-                    source,0,0,source.width,source.height,matrix,true
-                )
-            }
+            return Bitmap.createBitmap(
+                source, 0, 0, source.width, source.height, matrix, true
+            )
         }
+    }
+}
+
+
+
 
 
