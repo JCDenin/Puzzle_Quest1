@@ -192,7 +192,7 @@ class PuzzleActivity : AppCompatActivity() {
                 //draw path
                 val bampSize = pieceHeight / 4
                 val canvas = Canvas(puzzlePiece)
-                val path = android.graphics.Path
+                val path = android.graphics.Path //можливо ще треба дужки
                 path.moveTo(offsetX.toFloat(),offsetY.toFloat())
 
                 if(row == 0){
