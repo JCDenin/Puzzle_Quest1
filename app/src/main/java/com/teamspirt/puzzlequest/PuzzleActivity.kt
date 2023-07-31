@@ -1,5 +1,6 @@
 package com.teamspirt.puzzlequest
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapFactory.Options
@@ -10,6 +11,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
+import android.media.ExifInterface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -53,7 +55,7 @@ class PuzzleActivity : AppCompatActivity() {
                 setPicFromAsset(assetName,imageView)
             }
             else if (mCurrentPhotoPath != null){
-                setPicFromPhotoPath(mCurrentPhotoPath,imageView)
+                setPicFromPhotoPath(mCurrentPhotoPath!!,imageView)
             }
             else if (mCurrentPhotoUri != null){
                 imageView.setImageURI(Uri.parse(mCurrentPhotoUri))
@@ -80,6 +82,7 @@ class PuzzleActivity : AppCompatActivity() {
 
         }
     }
+
 
     private fun setPicFromAsset(assetName: String, imageView: ImageView?) {
 
@@ -121,13 +124,13 @@ class PuzzleActivity : AppCompatActivity() {
     }
 
 
-    private fun splitImage():ArrayList<PuzzlePiece?>{
+    private fun splitImage(): ArrayList<PuzzlePiece> {
 
         val piecesNumber = 12
         val rows = 4
         val cols = 3
         val imageView = findViewById<ImageView>(R.id.imageView)
-        val pieces = ArrayList<PuzzlePiece?>(piecesNumber)
+        val pieces = ArrayList<PuzzlePiece>(piecesNumber)
 
         // Get the scaled bitmap of the source image
         val drawable = imageView.drawable as BitmapDrawable
@@ -192,7 +195,7 @@ class PuzzleActivity : AppCompatActivity() {
                 //draw path
                 val bampSize = pieceHeight / 4
                 val canvas = Canvas(puzzlePiece)
-                val path = android.graphics.Path //можливо ще треба дужки
+                val path = android.graphics.Path() //можливо ще треба дужки - (треба)
                 path.moveTo(offsetX.toFloat(),offsetY.toFloat())
 
                 if(row == 0){
@@ -328,6 +331,39 @@ class PuzzleActivity : AppCompatActivity() {
         }
         return  pieces
     }
+
+    fun checkGameOver(){
+        if(isGameOver) {
+            androidx.appcompat.app.AlertDialog.Builder(this@PuzzleActivity)
+                .setTitle("You Won..!!")
+                .setIcon(R.drawable.ic_celebration)
+                .setMessage("You are win..\nif you want a new Game ??")
+                .setPositiveButton("Yes"){
+                    dialog,_->
+                    finish()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("No"){
+                        dialog,_->
+                    finish()
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+    }
+
+    private val isGameOver :Boolean
+        private get (){
+            for (piece in pieces!!){
+                if(piece.canMove){
+                    return false
+                }
+            }
+            return true
+        }
+
+
     private fun getBitmapPositionInsideImageView(imageView: ImageView?): IntArray {
 
         val ret = IntArray(4)
@@ -354,7 +390,73 @@ class PuzzleActivity : AppCompatActivity() {
         val origH = d.intrinsicHeight
 
         // далі продовжувати тут..
+
+         val actW = Math.round(origW * scaleX)
+        val actH = Math.round(origH * scaleY)
+
+        ret[2]= actW
+        ret[3]= actH
+
+        val imageViewW=imageView.width
+        val imageViewH=imageView.height
+
+        val top = (imageViewH -actH) / 2
+        val left = (imageViewW -actW) / 2
+
+        ret[0]= top
+        ret[1]= left
+
         return ret
+
+    }
+    private fun setPicFromPhotoPath(mCurrentPhotoPath: String, imageView: ImageView?) {
+        val targetW=imageView!!.width
+        val targetH =imageView!!.height
+
+        val bmOptions =BitmapFactory.Options()
+
+        bmOptions.inJustDecodeBounds=true
+        BitmapFactory.decodeFile(mCurrentPhotoPath,bmOptions)
+
+        val photoW=bmOptions.outWidth
+        val photoH=bmOptions.outHeight
+
+        val scaleFactor = Math.min(
+            photoW/targetW,photoH/targetH
+        )
+
+        bmOptions.inJustDecodeBounds =false
+        bmOptions.inSampleSize=scaleFactor
+        bmOptions.inPurgeable=true
+        val bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath,bmOptions)
+        var rotatedBitmap = bitmap
+
+        try{
+            val ei=ExifInterface(mCurrentPhotoPath)
+            val orientation=ei.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED
+            )
+
+            when (orientation){
+                ExifInterface.ORIENTATION_ROTATE_90 ->{
+                    rotatedBitmap = rotateImage(bitmap,90f)
+                }
+                ExifInterface.ORIENTATION_ROTATE_180 ->{
+                    rotatedBitmap = rotateImage(bitmap,180f)
+                }
+                ExifInterface.ORIENTATION_ROTATE_270 ->{
+                    rotatedBitmap = rotateImage(bitmap,270f)
+                }
+            }
+
+
+        } catch (e: IOException){
+            e.printStackTrace()
+            Toast.makeText(this@PuzzleActivity,e.localizedMessage,Toast.LENGTH_SHORT).show()
+        }
+        imageView.setImageBitmap(rotatedBitmap)
+
 
     }
     companion object {
