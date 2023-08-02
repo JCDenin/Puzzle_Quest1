@@ -208,7 +208,8 @@ class PuzzleActivity : AppCompatActivity() {
                 else{
                     //top bump
                     path.lineTo(
-                        (offsetX + (pieceBitmap.width - offsetX)/3).toFloat()
+                        (offsetX + (pieceBitmap.width - offsetX)/3).toFloat(),
+                        offsetY.toFloat()
                     )
 
                     path.cubicTo(
@@ -226,7 +227,7 @@ class PuzzleActivity : AppCompatActivity() {
                 if(col == cols - 1){
                     // right side piece
                     path.lineTo(
-                        pieceBitmap.width.toByte(),
+                        pieceBitmap.width.toFloat(),
                         pieceBitmap.height.toFloat()
                     )
                 }
@@ -263,7 +264,7 @@ class PuzzleActivity : AppCompatActivity() {
                         pieceBitmap.height.toFloat()
                     )
 
-                    path.cublicTo(
+                    path.cubicTo(
                         (offsetX + (pieceBitmap.width - offsetX)/ 6 * 5).toFloat(),
                         (pieceBitmap.height - bampSize).toFloat(),
                         (offsetX + (pieceBitmap.width - offsetX)/ 6).toFloat(),
@@ -335,9 +336,9 @@ class PuzzleActivity : AppCompatActivity() {
     fun checkGameOver(){
         if(isGameOver) {
             androidx.appcompat.app.AlertDialog.Builder(this@PuzzleActivity)
-                .setTitle("You Won..!!")
-                .setIcon(R.drawable.ic_celebration)
-                .setMessage("You are win..\nif you want a new Game ??")
+                .setTitle("You win!")
+                //.setIcon(R.drawable.ic_celebration)
+                .setMessage("You win!\ndo you want a new game?")
                 .setPositiveButton("Yes"){
                     dialog,_->
                     finish()
@@ -389,9 +390,9 @@ class PuzzleActivity : AppCompatActivity() {
         val origW = d.intrinsicWidth
         val origH = d.intrinsicHeight
 
-        // далі продовжувати тут..
+        //Calculate the actual dimensions (далі продовжувати тут..)
 
-         val actW = Math.round(origW * scaleX)
+        val actW = Math.round(origW * scaleX)
         val actH = Math.round(origH * scaleY)
 
         ret[2]= actW
