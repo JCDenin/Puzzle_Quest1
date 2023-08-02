@@ -1,36 +1,23 @@
 package com.teamspirt.puzzlequest
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
-import android.widget.GridLayout
 import android.widget.GridView
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.teamspirt.puzzlequest.ui.theme.PuzzleQuestTheme
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.jar.Manifest
+import java.util.*
 import kotlin.jvm.Throws
 
 class MainActivity : AppCompatActivity() {
