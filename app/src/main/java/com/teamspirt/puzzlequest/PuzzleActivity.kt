@@ -145,9 +145,15 @@ class PuzzleActivity : AppCompatActivity() {
         val croppedImageWidth = scaledBitmapWidth - 2 * Math.abs(scaledBitmapLeft)
         val croppedImageHeight = scaledBitmapHeight - 2 * Math.abs(scaledBitmapTop)
 
-        val scaledBitmap = Bitmap.createScaledBitmap(
-            bitmap,scaledBitmapWidth,scaledBitmapHeight,true
-        )
+        // Check if bitmap is not null before creating scaledBitmap
+        val scaledBitmap: Bitmap = if (bitmap != null) {
+            Bitmap.createScaledBitmap(bitmap, scaledBitmapWidth, scaledBitmapHeight, true)
+        } else {
+            // Handle the situation when the bitmap is null
+            // For example, show an error message and return an empty list
+            Toast.makeText(this@PuzzleActivity, "Image is null", Toast.LENGTH_SHORT).show()
+            return ArrayList()
+        }
         val croppedBitmap = Bitmap.createBitmap(
             scaledBitmap,
                 Math.abs(scaledBitmapLeft),
