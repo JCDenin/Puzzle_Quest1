@@ -22,7 +22,7 @@ import kotlin.jvm.Throws
 
 class MainActivity : AppCompatActivity() {
 
-    var mCurrenPhotoPath:String?=null
+    var mCurrentPhotoPath:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             val image = File.createTempFile(
                 imageFileName,"jpg",storageDir
             )
-            mCurrenPhotoPath=image.absolutePath
+            mCurrentPhotoPath=image.absolutePath
             return image
         }
         return null
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             val intent=Intent(
                 this@MainActivity,PuzzleActivity::class.java
             )
-            intent.putExtra("mCurrentPhotoPath",mCurrenPhotoPath)
+            intent.putExtra("mCurrentPhotoPath",mCurrentPhotoPath)
             startActivity(intent)
         }
         if(requestCode== REQUEST_IMAGE_GALLERY && resultCode== RESULT_OK){
