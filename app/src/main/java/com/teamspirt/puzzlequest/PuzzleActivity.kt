@@ -94,7 +94,7 @@ class PuzzleActivity : AppCompatActivity() {
 
             val `is` = am.open("img/$assetName")
             // Get the dimensions of the bitmap
-            val bmOPtion = BitmapFactory.Options()
+            val bmOPtion = Options()
             BitmapFactory.decodeStream(
                 `is`, Rect(-1,-1,-1,-1),bmOPtion
             )
@@ -420,7 +420,7 @@ class PuzzleActivity : AppCompatActivity() {
         val targetW=imageView!!.width
         val targetH =imageView!!.height
 
-        val bmOptions =BitmapFactory.Options()
+        val bmOptions =Options()
 
         bmOptions.inJustDecodeBounds=true
         BitmapFactory.decodeFile(mCurrentPhotoPath,bmOptions)
